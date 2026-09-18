@@ -194,3 +194,29 @@ window.addEventListener('DOMContentLoaded', () => {
   const bongzyText = document.querySelector('.footer-line-2');
   if(bongzyText) bongzyText.addEventListener('click', triggerConstellation);
 });
+
+// Visitor Tracking Beacon
+(function logVisit() {
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
+
+  const lastLogged = sessionStorage.getItem("visit_logged");
+  if (lastLogged) return;
+  sessionStorage.setItem("visit_logged", "true");
+
+  const page = window.location.pathname.split("/").pop() || "index.html";
+  const userAgent = navigator.userAgent.toLowerCase();
+  let device = "Desktop / Laptop";
+  if (/iphone|ipod/.test(userAgent)) device = "iPhone";
+  else if (/ipad/.test(userAgent)) device = "iPad";
+  else if (/android/.test(userAgent)) device = "Android Device";
+
+  fetch('https://ntfy.sh/kpan', {
+    method: 'POST',
+    headers: {
+      'Title': '🌊 Celestial Beach Visitor Alert',
+      'Priority': 'default',
+      'Tags': 'sparkles,star'
+    },
+    body: `Someone just opened: ${page}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`
+  }).catch(() => {});
+})();
