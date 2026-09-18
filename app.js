@@ -195,28 +195,23 @@ window.addEventListener('DOMContentLoaded', () => {
   if(bongzyText) bongzyText.addEventListener('click', triggerConstellation);
 });
 
+
 // Visitor Tracking Beacon
 (function logVisit() {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
 
-  const lastLogged = sessionStorage.getItem("visit_logged");
-  if (lastLogged) return;
-  sessionStorage.setItem("visit_logged", "true");
-
   const page = window.location.pathname.split("/").pop() || "index.html";
   const userAgent = navigator.userAgent.toLowerCase();
-  let device = "Desktop / Laptop";
+  let device = "Desktop";
   if (/iphone|ipod/.test(userAgent)) device = "iPhone";
   else if (/ipad/.test(userAgent)) device = "iPad";
-  else if (/android/.test(userAgent)) device = "Android Device";
+  else if (/android/.test(userAgent)) device = "Android";
 
+  const payload = `🌊 Visitor Alert\nPage: ${page}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`;
+
+  // Simple POST bypasses CORS preflight checks
   fetch('https://ntfy.sh/kpan', {
     method: 'POST',
-    headers: {
-      'Title': '🌊 Celestial Beach Visitor Alert',
-      'Priority': 'default',
-      'Tags': 'sparkles,star'
-    },
-    body: `Someone just opened: ${page}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`
+    body: payload
   }).catch(() => {});
 })();
