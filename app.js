@@ -204,7 +204,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
 
   // 20-minute session inactivity window
-  const COOLDOWN_MINUTES = 20;
+  const COOLDOWN_MINUTES = 10;
   const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
   const now = Date.now();
   const lastActive = localStorage.getItem("kpan_last_active");
