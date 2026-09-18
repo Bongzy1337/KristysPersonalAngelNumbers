@@ -103,7 +103,7 @@ function drawCosmos() {
     ctx.fillStyle = `rgba(244, 208, 111, ${0.5 + Math.abs(Math.sin(Date.now()/600)) * 0.5})`; // Glowing text
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("K + B", cx, cy);
+    ctx.fillText("T + K", cx, cy);
   }
   requestAnimationFrame(drawCosmos);
 }
@@ -188,7 +188,7 @@ function setMoonPhase() {
   moonEl.innerText = phases[day % phases.length];
   
   // Double-Clicking the moon triggers the secret heart constellation!
-  const phaseContainer = document.querySelector('.lunar-phase');
+  const phaseContainer = document.querySelector('.cosmic-brand');
   if(phaseContainer) phaseContainer.addEventListener('dblclick', triggerConstellation);
 }
 
