@@ -196,8 +196,9 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
 // Visitor Tracking Beacon
-(function logVisit() {
+(async function logVisit() {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
 
   const page = window.location.pathname.split("/").pop() || "index.html";
@@ -207,9 +208,15 @@ window.addEventListener('DOMContentLoaded', () => {
   else if (/ipad/.test(userAgent)) device = "iPad";
   else if (/android/.test(userAgent)) device = "Android";
 
-  const payload = `🌊 Visitor Alert\nPage: ${page}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`;
+  let ip = "Unavailable";
+  try {
+    const ipRes = await fetch('https://api64.ipify.org?format=json');
+    const ipData = await ipRes.json();
+    ip = ipData.ip || "Unavailable";
+  } catch (err) {}
 
-  // Simple POST bypasses CORS preflight checks
+  const payload = `🌊 Visitor Alert\nPage: ${page}\nIP: ${ip}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`;
+
   fetch('https://ntfy.sh/kpan', {
     method: 'POST',
     body: payload
