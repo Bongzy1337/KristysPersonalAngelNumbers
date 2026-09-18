@@ -198,9 +198,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+
 // Visitor Tracking Beacon
 (async function logVisit() {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
+
+  // 20-minute session inactivity window
+  const COOLDOWN_MINUTES = 20;
+  const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
+  const now = Date.now();
+  const lastActive = localStorage.getItem("kpan_last_active");
+
+  // Refresh active timestamp on every page navigation
+  localStorage.setItem("kpan_last_active", now.toString());
+
+  // Suppress alert if visitor clicked a page within the last 20 minutes
+  if (lastActive && (now - parseInt(lastActive, 10)) < COOLDOWN_MS) {
+    return;
+  }
 
   const page = window.location.pathname.split("/").pop() || "index.html";
   const userAgent = navigator.userAgent.toLowerCase();
@@ -209,7 +224,6 @@ window.addEventListener('DOMContentLoaded', () => {
   else if (/ipad/.test(userAgent)) device = "iPad";
   else if (/android/.test(userAgent)) device = "Android";
 
-  // Multi-tier fallback cascade with 2s timeout per provider
   async function resolveVisitorIP() {
     const providers = [
       {
