@@ -20,7 +20,8 @@ function resizeCanvas() {
 
 function initStars() {
   stars = [];
-  const starCount = Math.floor((canvas.width * canvas.height) / 8000);
+  // OPTIMIZATION 1: Reduced total star density by ~35% for smoother rendering
+  const starCount = Math.floor((canvas.width * canvas.height) / 12000);
   for (let i = 0; i < starCount; i++) {
     stars.push({
       x: Math.random() * canvas.width,
@@ -37,22 +38,20 @@ function triggerConstellation() {
   if (constellationMode) return;
   constellationMode = true;
   
-  // Mathematical heart curve
   for(let i=0; i<stars.length; i++) {
-    if (i < 90) { // First 90 stars form the heart
+    if (i < 90) {
       const t = (i / 90) * Math.PI * 2;
       const x = cx + scale * 16 * Math.pow(Math.sin(t), 3);
       const y = cy - scale * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
       stars[i].tx = x;
       stars[i].ty = y;
-    } else { // Rest scatter
+    } else {
       stars[i].tx = stars[i].x;
       stars[i].ty = stars[i].y;
     }
   }
 }
 
-// Type L-O-V-E to trigger
 window.addEventListener('keydown', (e) => {
   if(e.key.toLowerCase() === secretCode[codePos]) {
     codePos++;
@@ -68,10 +67,9 @@ function drawCosmos() {
     s.alpha += s.fadeSpeed;
     if (s.alpha <= 0.1 || s.alpha >= 0.9) s.fadeSpeed = -s.fadeSpeed;
     
-    // Smoothly fly stars to constellation points
     if (constellationMode && s.tx !== undefined) {
-      s.x += (s.tx - s.x) * 0.03;
-      s.y += (s.ty - s.y) * 0.03;
+      s.x += (s.tx - s.x) * 0.04;
+      s.y += (s.ty - s.y) * 0.04;
     }
 
     ctx.beginPath();
@@ -79,7 +77,6 @@ function drawCosmos() {
     ctx.fillStyle = `rgba(230, 246, 255, ${Math.abs(s.alpha)})`;
     ctx.fill();
 
-    // Draw lines between stars
     if (constellationMode && i > 0 && i < 90) {
       ctx.beginPath();
       ctx.moveTo(stars[i-1].x, stars[i-1].y);
@@ -88,19 +85,21 @@ function drawCosmos() {
       ctx.lineWidth = 1;
       ctx.stroke();
     } else if (!constellationMode && mouse.x && mouse.y) {
-      const dist = Math.hypot(s.x - mouse.x, s.y - mouse.y);
-      if (dist < 130) {
-        ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(138, 226, 214, ${(1 - dist / 130) * 0.4})`;
-        ctx.lineWidth = 0.6; ctx.stroke();
+      // OPTIMIZATION 2: Fast bounding box check (prevents expensive math on distant stars)
+      if (Math.abs(s.x - mouse.x) < 130 && Math.abs(s.y - mouse.y) < 130) {
+        const dist = Math.hypot(s.x - mouse.x, s.y - mouse.y);
+        if (dist < 130) {
+          ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(138, 226, 214, ${(1 - dist / 130) * 0.4})`;
+          ctx.lineWidth = 0.6; ctx.stroke();
+        }
       }
     }
   }
 
-  // Draw K + B in the center when active
   if (constellationMode) {
     ctx.font = "bold 26px 'Cinzel', serif";
-    ctx.fillStyle = `rgba(244, 208, 111, ${0.5 + Math.abs(Math.sin(Date.now()/600)) * 0.5})`; // Glowing text
+    ctx.fillStyle = `rgba(244, 208, 111, ${0.5 + Math.abs(Math.sin(Date.now()/600)) * 0.5})`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("T + K", cx, cy);
@@ -114,7 +113,6 @@ window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; })
 
 // --- INTERACTIVE HEARTS ON CLICK ---
 document.addEventListener('click', (e) => {
-  // 1. Water Ripple
   const ripple = document.createElement('div');
   ripple.classList.add('ripple');
   document.body.appendChild(ripple);
@@ -124,7 +122,6 @@ document.addEventListener('click', (e) => {
   ripple.style.top = `${e.pageY - size/2}px`;
   setTimeout(() => ripple.remove(), 750);
 
-  // 2. Floating Hearts
   for(let i=0; i<3; i++) {
     setTimeout(() => {
       const heart = document.createElement('div');
@@ -142,9 +139,7 @@ document.addEventListener('click', (e) => {
 function initLoveClock() {
   const clockEl = document.getElementById('love-clock-timer');
   if (!clockEl) return;
-  
-  // DEFAULT START DATE (User can change this in app.js later)
-  const startDate = new Date('2022-12-11T00:00:00').getTime();
+  const startDate = new Date('2022-11-12T00:00:00').getTime();
 
   setInterval(() => {
     const now = new Date().getTime();
@@ -154,7 +149,6 @@ function initLoveClock() {
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const secs = Math.floor((diff % (1000 * 60)) / 1000);
     
-    // Format to always show 2 digits for hrs/mins/secs
     const h = hours.toString().padStart(2, '0');
     const m = mins.toString().padStart(2, '0');
     const s = secs.toString().padStart(2, '0');
@@ -187,9 +181,8 @@ function setMoonPhase() {
   const day = new Date().getDate();
   moonEl.innerText = phases[day % phases.length];
   
-  // Double-Clicking the moon triggers the secret heart constellation!
-  const phaseContainer = document.querySelector('.cosmic-brand');
-  if(phaseContainer) phaseContainer.addEventListener('dblclick', triggerConstellation);
+  const titleContainer = document.querySelector('.cosmic-brand');
+  if(titleContainer) titleContainer.addEventListener('dblclick', triggerConstellation);
 }
 
 resizeCanvas();
