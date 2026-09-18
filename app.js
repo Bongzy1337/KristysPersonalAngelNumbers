@@ -20,7 +20,6 @@ function resizeCanvas() {
 
 function initStars() {
   stars = [];
-  // OPTIMIZATION 1: Reduced total star density by ~35% for smoother rendering
   const starCount = Math.floor((canvas.width * canvas.height) / 12000);
   for (let i = 0; i < starCount; i++) {
     stars.push({
@@ -85,7 +84,6 @@ function drawCosmos() {
       ctx.lineWidth = 1;
       ctx.stroke();
     } else if (!constellationMode && mouse.x && mouse.y) {
-      // OPTIMIZATION 2: Fast bounding box check (prevents expensive math on distant stars)
       if (Math.abs(s.x - mouse.x) < 130 && Math.abs(s.y - mouse.y) < 130) {
         const dist = Math.hypot(s.x - mouse.x, s.y - mouse.y);
         if (dist < 130) {
@@ -164,6 +162,7 @@ const horoscopes = [
   "🌙 What was once hidden is rising gently to the shore in divine timing.",
   "⭐ Your souls remain linked across the ocean of infinity."
 ];
+
 function consultOracle() {
   const el = document.getElementById('oracle-text');
   if (!el) return;
@@ -174,12 +173,43 @@ function consultOracle() {
     el.style.opacity = 1;
   }, 150);
 }
+
+// --- LIVE MATHEMATICAL MOON PHASE ---
 function setMoonPhase() {
   const moonEl = document.getElementById('moon-info');
   if (!moonEl) return;
-  const phases = ['🌑 New Moon Tide', '🌓 Waxing Crescent Ocean', '🌕 Full Moon Radiance', '🌗 Waning Celestial Tide'];
-  const day = new Date().getDate();
-  moonEl.innerText = phases[day % phases.length];
+  
+  const now = new Date();
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let day = now.getDate();
+  
+  // Calculate Julian Date approximation for moon cycle
+  if (month < 3) { year--; month += 12; }
+  month++;
+  const c = 365.25 * year;
+  const e = 30.6 * month;
+  
+  // Total days elapsed divided by the 29.53 day lunar cycle
+  const totalDays = c + e + day - 694039.09;
+  const cycle = totalDays / 29.5305882;
+  const fractionalPhase = cycle - Math.floor(cycle);
+  
+  // Map the fraction into 8 distinct phases
+  const phaseIndex = Math.round(fractionalPhase * 8) % 8;
+  
+  const phases = [
+    '🌑 New Moon Tide',
+    '🌒 Waxing Crescent Ocean',
+    '🌓 First Quarter Tide',
+    '🌔 Waxing Gibbous Horizon',
+    '🌕 Full Moon Radiance',
+    '🌖 Waning Gibbous Sea',
+    '🌗 Last Quarter Tide',
+    '🌘 Waning Crescent Ocean'
+  ];
+  
+  moonEl.innerText = phases[phaseIndex];
   
   const titleContainer = document.querySelector('.cosmic-brand');
   if(titleContainer) titleContainer.addEventListener('dblclick', triggerConstellation);
