@@ -3,22 +3,17 @@
   --ocean-abyss: #02070e;
   --ocean-teal: #104e64;
   --tide-foam: #8ae2d6;
-  --coral-glow: #e8a598;
   --celestial-gold: #f4d06f;
   --starlight: #e6f6ff;
-  --glass-bg: rgba(8, 28, 44, 0.65);
+  --glass-bg: rgba(8, 28, 44, 0.7);
   --glass-border: rgba(138, 226, 214, 0.25);
   --glass-shadow: 0 12px 40px 0 rgba(0, 15, 30, 0.6);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Cinzel', serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, serif;
   background: radial-gradient(circle at 50% 10%, #0d2b45 0%, var(--ocean-deep) 60%, var(--ocean-abyss) 100%);
   color: var(--starlight);
   min-height: 100vh;
@@ -27,7 +22,6 @@ body {
   line-height: 1.7;
 }
 
-/* Constellation Canvas */
 #celestial-canvas {
   position: fixed;
   top: 0;
@@ -41,12 +35,11 @@ body {
 .wrapper {
   position: relative;
   z-index: 2;
-  max-width: 720px;
+  max-width: 740px;
   margin: 0 auto;
   padding: 40px 20px 140px;
 }
 
-/* Header & Moon Phase */
 header {
   text-align: center;
   margin-bottom: 28px;
@@ -78,13 +71,12 @@ header {
   border: 1px solid var(--glass-border);
   padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--celestial-gold);
   margin-top: 12px;
   backdrop-filter: blur(8px);
 }
 
-/* Navigation Pills */
 .nav-pills {
   display: flex;
   justify-content: center;
@@ -103,7 +95,7 @@ header {
   font-weight: 600;
   font-size: 0.85rem;
   letter-spacing: 0.05em;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
 
@@ -115,17 +107,14 @@ header {
   box-shadow: 0 6px 20px rgba(138, 226, 214, 0.45);
 }
 
-/* Glassmorphic Beach Cards */
 .card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 18px;
-  padding: 32px;
+  padding: 30px;
   backdrop-filter: blur(14px);
   box-shadow: var(--glass-shadow);
   margin-bottom: 24px;
-  position: relative;
-  overflow: hidden;
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
@@ -137,7 +126,9 @@ header {
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
   border-bottom: 1px solid rgba(138, 226, 214, 0.15);
   padding-bottom: 14px;
   margin-bottom: 18px;
@@ -149,10 +140,17 @@ header {
   letter-spacing: 0.04em;
 }
 
+/* FIXED TIME BADGE: Never line-wraps awkwardly */
 .times {
   font-size: 0.88rem;
   color: var(--tide-foam);
-  font-style: italic;
+  background: rgba(16, 78, 100, 0.4);
+  border: 1px solid var(--glass-border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  font-weight: 500;
 }
 
 .affirmation {
@@ -172,14 +170,10 @@ header {
   letter-spacing: 0.14em;
   color: var(--tide-foam);
   margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: block;
 }
 
-.interpretations {
-  list-style: none;
-}
+.interpretations { list-style: none; }
 
 .interpretations li {
   padding: 10px 0;
@@ -187,17 +181,14 @@ header {
   font-size: 0.95rem;
 }
 
-.interpretations li:last-child {
-  border-bottom: none;
-}
+.interpretations li:last-child { border-bottom: none; }
 
-/* Interactive Oracle Oracle Shell Button */
 .oracle-box {
   margin-top: 24px;
-  padding: 16px;
-  background: rgba(4, 18, 30, 0.4);
+  padding: 18px;
+  background: rgba(4, 18, 30, 0.5);
   border: 1px dashed var(--glass-border);
-  border-radius: 12px;
+  border-radius: 14px;
   text-align: center;
 }
 
@@ -205,13 +196,12 @@ header {
   background: linear-gradient(135deg, #184e68, #287a93);
   border: 1px solid var(--tide-foam);
   color: #ffffff;
-  padding: 9px 20px;
+  padding: 9px 22px;
   border-radius: 30px;
   cursor: pointer;
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   transition: all 0.3s ease;
-  outline: none;
 }
 
 .oracle-btn:hover {
@@ -222,7 +212,7 @@ header {
 
 .oracle-result {
   margin-top: 12px;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--celestial-gold);
   min-height: 24px;
   font-style: italic;
@@ -245,13 +235,22 @@ header {
 footer {
   text-align: center;
   margin-top: 50px;
+  line-height: 1.8;
+}
+
+.footer-line-1 {
   color: var(--tide-foam);
-  font-size: 0.9rem;
-  opacity: 0.8;
+  font-size: 0.92rem;
   letter-spacing: 0.05em;
 }
 
-/* Animated Ocean Waves Footer */
+.footer-line-2 {
+  color: var(--celestial-gold);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
 .ocean-waves {
   position: fixed;
   bottom: 0;
@@ -269,17 +268,17 @@ footer {
   width: 200%;
   height: 100%;
   background: repeat-x;
-  opacity: 0.25;
 }
 
 .wave1 {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0 C150,90 350,-40 500,40 C650,120 900,20 1200,60 L1200,120 L0,120 Z" fill="%238ae2d6"/></svg>');
+  opacity: 0.22;
   animation: oceanDrift 14s linear infinite;
 }
 
 .wave2 {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,40 C300,110 450,10 600,50 C800,100 1000,-10 1200,40 L1200,120 L0,120 Z" fill="%23104e64"/></svg>');
-  opacity: 0.45;
+  opacity: 0.4;
   animation: oceanDrift 9s linear infinite reverse;
 }
 
@@ -288,7 +287,6 @@ footer {
   100% { transform: translateX(-50%); }
 }
 
-/* Water Ripple Animation */
 .ripple {
   position: absolute;
   border-radius: 50%;
@@ -299,8 +297,5 @@ footer {
 }
 
 @keyframes rippleGlow {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
+  to { transform: scale(4); opacity: 0; }
 }

@@ -1,4 +1,3 @@
-// Interactive Astrological Constellation Canvas
 const canvas = document.getElementById('celestial-canvas');
 const ctx = canvas.getContext('2d');
 let stars = [];
@@ -26,18 +25,14 @@ function initStars() {
 
 function drawCosmos() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  // Update and draw stars
   for (let s of stars) {
     s.alpha += s.fadeSpeed;
     if (s.alpha <= 0.1 || s.alpha >= 0.9) s.fadeSpeed = -s.fadeSpeed;
-    
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(230, 246, 255, ${Math.abs(s.alpha)})`;
     ctx.fill();
 
-    // Connect to mouse like constellation lines
     if (mouse.x && mouse.y) {
       const dist = Math.hypot(s.x - mouse.x, s.y - mouse.y);
       if (dist < 130) {
@@ -54,16 +49,9 @@ function drawCosmos() {
 }
 
 window.addEventListener('resize', resizeCanvas);
-window.addEventListener('mousemove', (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-window.addEventListener('mouseleave', () => {
-  mouse.x = null;
-  mouse.y = null;
-});
+window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-// Liquid Water Ripple Effect on Click
 document.addEventListener('click', (e) => {
   const ripple = document.createElement('div');
   ripple.classList.add('ripple');
@@ -75,7 +63,6 @@ document.addEventListener('click', (e) => {
   setTimeout(() => ripple.remove(), 750);
 });
 
-// Interactive Shell/Crystal Consultation
 const horoscopes = [
   "🌊 The tides are shifting in your favour; release resistance.",
   "✨ Jupiter's energy brings calm reassurance to your heart today.",
@@ -90,12 +77,11 @@ function consultOracle() {
   el.style.opacity = 0;
   setTimeout(() => {
     el.innerText = horoscopes[Math.floor(Math.random() * horoscopes.length)];
-    el.style.transition = 'opacity 0.5s ease';
+    el.style.transition = 'opacity 0.4s ease';
     el.style.opacity = 1;
-  }, 200);
+  }, 150);
 }
 
-// Moon Phase Estimator
 function setMoonPhase() {
   const moonEl = document.getElementById('moon-info');
   if (!moonEl) return;
