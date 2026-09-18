@@ -197,6 +197,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+
 // Visitor Tracking Beacon
 (async function logVisit() {
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;
@@ -208,14 +209,49 @@ window.addEventListener('DOMContentLoaded', () => {
   else if (/ipad/.test(userAgent)) device = "iPad";
   else if (/android/.test(userAgent)) device = "Android";
 
-  let ip = "Unavailable";
-  try {
-    const ipRes = await fetch('https://api64.ipify.org?format=json');
-    const ipData = await ipRes.json();
-    ip = ipData.ip || "Unavailable";
-  } catch (err) {}
+  // Multi-tier fallback cascade with 2s timeout per provider
+  async function resolveVisitorIP() {
+    const providers = [
+      {
+        url: 'https://ipwho.is/',
+        extract: d => {
+          if (!d.ip) return null;
+          const loc = [d.city, d.country].filter(Boolean).join(', ');
+          return loc ? `${d.ip} (${loc})` : d.ip;
+        }
+      },
+      {
+        url: 'https://freeipapi.com/api/json',
+        extract: d => {
+          if (!d.ipAddress) return null;
+          const loc = [d.cityName, d.countryName].filter(Boolean).join(', ');
+          return loc ? `${d.ipAddress} (${loc})` : d.ipAddress;
+        }
+      },
+      {
+        url: 'https://api.ipify.org?format=json',
+        extract: d => d.ip || null
+      }
+    ];
 
-  const payload = `🌊 Visitor Alert\nPage: ${page}\nIP: ${ip}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`;
+    for (const p of providers) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 2000);
+        const res = await fetch(p.url, { signal: timeout.signal });
+        clearTimeout(timeout);
+        if (res.ok) {
+          const data = await res.json();
+          const result = p.extract(data);
+          if (result) return result;
+        }
+      } catch (err) {}
+    }
+    return "Unavailable";
+  }
+
+  const ipInfo = await resolveVisitorIP();
+  const payload = `🌊 Visitor Alert\nPage: ${page}\nIP: ${ipInfo}\nDevice: ${device}\nTime: ${new Date().toLocaleTimeString()}`;
 
   fetch('https://ntfy.sh/kpan', {
     method: 'POST',
