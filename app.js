@@ -129,7 +129,7 @@ document.addEventListener('click', (e) => {
 function initLoveClock() {
   const clockEl = document.getElementById('love-clock-timer');
   if (!clockEl) return;
-  const startDate = new Date('2022-11-12T00:00:00').getTime();
+  const startDate = new Date('2022-12-12T00:00:00').getTime();
   setInterval(() => {
     const diff = new Date().getTime() - startDate;
     const d = Math.floor(diff / 86400000);
