@@ -136,3 +136,30 @@ footer { text-align: center; margin-top: 50px; line-height: 1.8; }
 }
 .cosmic-brand { cursor: pointer; user-select: none; transition: transform 0.2s; }
 .cosmic-brand:active { transform: scale(0.95); }
+
+/* Beautiful Index Menu Cards */
+.menu-grid { display: grid; gap: 16px; margin-bottom: 20px; }
+.menu-card {
+  display: flex; align-items: center; text-decoration: none;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 20px 24px; transition: all 0.3s ease;
+  backdrop-filter: blur(14px); box-shadow: var(--glass-shadow);
+}
+.menu-card:hover {
+  border-color: rgba(244, 208, 111, 0.45); transform: translateY(-3px);
+  background: rgba(16, 78, 100, 0.25);
+}
+.menu-num {
+  font-size: 1.4rem; font-weight: 700; color: var(--celestial-gold);
+  min-width: 65px; letter-spacing: 0.05em;
+}
+.menu-desc {
+  flex-grow: 1; font-size: 0.95rem; color: var(--starlight);
+  letter-spacing: 0.03em;
+}
+.menu-arrow {
+  color: var(--tide-foam); font-size: 1.2rem; transition: transform 0.3s;
+}
+.menu-card:hover .menu-arrow {
+  transform: translateX(6px); color: var(--celestial-gold);
+}
