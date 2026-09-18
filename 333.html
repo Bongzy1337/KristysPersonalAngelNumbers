@@ -8,16 +8,23 @@
 </head>
 <body>
   <canvas id="celestial-canvas"></canvas>
-  <div class="ocean-waves">
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
+  <div class="ocean-waves"><div class="wave wave1"></div><div class="wave wave2"></div></div>
+
+  <div class="bottle-btn" id="bottle-btn" title="Open a message from me">🍾</div>
+  <div class="bottle-modal" id="bottle-modal">
+    <div class="bottle-content">
+      <span class="close-modal" id="close-modal">×</span>
+      <div class="section-title">✦ A Message For You ✦</div>
+      <div class="bottle-text" id="bottle-text">Loading...</div>
+      <p style="color: var(--celestial-gold); font-size: 0.85rem; letter-spacing: 0.05em;">- Bongzy</p>
+    </div>
   </div>
 
   <div class="wrapper">
     <header>
-      <a href="index.html" class="cosmic-brand" style="display: inline-block; text-decoration: none;">🔆 T&lt;3K 🌛</a>
+      <a href="index.html" class="cosmic-brand">🔆 T&lt;3K 🌛</a>
       <div class="sub-tide">Celestial Waves & Angel Numbers Sanctuary</div>
-      <a href="moon.html" class="lunar-phase" style="text-decoration: none;"><span id="moon-info">🌙 Celestial Tide</span> • Waters of Pisces & Cancer</div>
+      <a href="#" class="lunar-phase"><span id="moon-info">🌙 Celestial Tide</span></a>
     </header>
 
     <nav class="nav-pills">
@@ -36,36 +43,25 @@
         <h2>Angel Number 333</h2>
         <span class="time-badge">03:33 AM & 03:33 PM</span>
       </div>
-
       <div class="affirmation">✨ Affirmation: “I feel your presence guiding and supporting me today.”</div>
-
       <div class="section-title">✦ Oceanic & Astrological Resonance ✦</div>
-      <ul class="interpretations">
-        <li>Loving support, creativity, and reassuring presence surrounding you.</li>
-        <li>Move forward with quiet confidence and self-assurance.</li>
-        <li>A reminder to express your inner truth and heartfelt feelings openly.</li>
-        <li>An indicator of spiritual growth and enduring guidance.</li>
-      </ul>
-
+      <ul class="interpretations"><li>Loving support, creativity, and reassuring presence surrounding you.</li><li>Move forward with quiet confidence and self-assurance.</li><li>A reminder to express your inner truth and heartfelt feelings openly.</li><li>An indicator of spiritual growth and enduring guidance.</li></ul>
       <div class="oracle-box">
         <button class="oracle-btn" onclick="consultOracle()">🐚 Consult the Celestial Tides</button>
         <div id="oracle-text" class="oracle-result">Click to receive a coastal horoscope reflection</div>
       </div>
-
       <a href="index.html" class="back-btn">← Return to Celestial Overview</a>
     </article>
 
-    <div class="love-clock-container" style="margin-top: 30px;">
+    <div class="love-clock-container">
       <div class="love-clock-title">Time Since I Fell For You</div>
       <div class="love-clock-time" id="love-clock-timer">Calculating...</div>
     </div>
-
     <footer>
       <p class="footer-line-1">I will forever love you kricky XO</p>
       <p class="footer-line-2">Made with love by bongzy XO</p>
     </footer>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>

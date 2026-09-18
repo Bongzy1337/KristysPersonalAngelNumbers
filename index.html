@@ -8,84 +8,46 @@
 </head>
 <body>
   <canvas id="celestial-canvas"></canvas>
-  <div class="ocean-waves">
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
+  <div class="ocean-waves"><div class="wave wave1"></div><div class="wave wave2"></div></div>
+
+  <!-- Message in a Bottle -->
+  <div class="bottle-btn" id="bottle-btn" title="Open a message from me">🍾</div>
+  <div class="bottle-modal" id="bottle-modal">
+    <div class="bottle-content">
+      <span class="close-modal" id="close-modal">×</span>
+      <div class="section-title">✦ A Message For You ✦</div>
+      <div class="bottle-text" id="bottle-text">Loading...</div>
+      <p style="color: var(--celestial-gold); font-size: 0.85rem; letter-spacing: 0.05em;">- Bongzy</p>
+    </div>
   </div>
 
   <div class="wrapper">
     <header>
-      <a href="index.html" class="cosmic-brand" style="display: inline-block; text-decoration: none;">🔆 T&lt;3K 🌛</a>
+      <a href="index.html" class="cosmic-brand">🔆 T&lt;3K 🌛</a>
       <div class="sub-tide">Celestial Oceans & Angel Alignments</div>
-      <a href="moon.html" class="lunar-phase" style="text-decoration: none;"><span id="moon-info">🌙 Celestial Tide</span> • Starlit Horizon</div>
+      <a href="#" class="lunar-phase"><span id="moon-info">🌙 Celestial Tide</span></a>
     </header>
 
-
-    <nav class="nav-pills">
-      <a href="111.html">111</a>
-      <a href="222.html">222</a>
-      <a href="333.html">333</a>
-      <a href="444.html">444</a>
-      <a href="555.html">555</a>
-      <a href="1010.html">1010</a>
-      <a href="1111.html">1111</a>
-      <a href="1212.html">1212</a>
-    </nav>
-
     <div class="menu-grid">
-      <a href="111.html" class="menu-card">
-        <span class="menu-num">111</span>
-        <span class="menu-desc">Manifestation & Oceanic Beginnings</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="222.html" class="menu-card">
-        <span class="menu-num">222</span>
-        <span class="menu-desc">Balance & Divine Lunar Timing</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="333.html" class="menu-card">
-        <span class="menu-num">333</span>
-        <span class="menu-desc">Spiritual Guidance & Whispering Waves</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="444.html" class="menu-card">
-        <span class="menu-num">444</span>
-        <span class="menu-desc">Steadfast Protection & Coastal Foundation</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="555.html" class="menu-card">
-        <span class="menu-num">555</span>
-        <span class="menu-desc">Positive Shifts & Restless Tides</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="1010.html" class="menu-card">
-        <span class="menu-num">1010</span>
-        <span class="menu-desc">Higher Alignment & Spiritual Momentum</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="1111.html" class="menu-card">
-        <span class="menu-num">1111</span>
-        <span class="menu-desc">Pure Starlight Awakening & Synchronicity</span>
-        <span class="menu-arrow">→</span>
-      </a>
-      <a href="1212.html" class="menu-card">
-        <span class="menu-num">1212</span>
-        <span class="menu-desc">Peaceful Wholeness & Cosmic Presence</span>
-        <span class="menu-arrow">→</span>
-      </a>
+      <a href="111.html" class="menu-card"><span class="menu-num">111</span><span class="menu-desc">Manifestation & Oceanic Beginnings</span><span class="menu-arrow">→</span></a>
+      <a href="222.html" class="menu-card"><span class="menu-num">222</span><span class="menu-desc">Balance & Divine Lunar Timing</span><span class="menu-arrow">→</span></a>
+      <a href="333.html" class="menu-card"><span class="menu-num">333</span><span class="menu-desc">Spiritual Guidance & Whispering Waves</span><span class="menu-arrow">→</span></a>
+      <a href="444.html" class="menu-card"><span class="menu-num">444</span><span class="menu-desc">Steadfast Protection & Coastal Foundation</span><span class="menu-arrow">→</span></a>
+      <a href="555.html" class="menu-card"><span class="menu-num">555</span><span class="menu-desc">Positive Shifts & Restless Tides</span><span class="menu-arrow">→</span></a>
+      <a href="1010.html" class="menu-card"><span class="menu-num">1010</span><span class="menu-desc">Higher Alignment & Spiritual Momentum</span><span class="menu-arrow">→</span></a>
+      <a href="1111.html" class="menu-card"><span class="menu-num">1111</span><span class="menu-desc">Pure Starlight Awakening & Synchronicity</span><span class="menu-arrow">→</span></a>
+      <a href="1212.html" class="menu-card"><span class="menu-num">1212</span><span class="menu-desc">Peaceful Wholeness & Cosmic Presence</span><span class="menu-arrow">→</span></a>
     </div>
 
-    <div class="love-clock-container" style="margin-top: 30px;">
+    <div class="love-clock-container">
       <div class="love-clock-title">Time Since I Fell For You</div>
       <div class="love-clock-time" id="love-clock-timer">Calculating...</div>
     </div>
-
     <footer>
       <p class="footer-line-1">I will forever love you kricky XO</p>
       <p class="footer-line-2">Made with love by bongzy XO</p>
     </footer>
   </div>
-
   <script src="app.js"></script>
 </body>
 </html>
