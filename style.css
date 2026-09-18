@@ -199,3 +199,17 @@ footer { text-align: center; margin-top: 50px; line-height: 1.8; }
     gap: 18px;
   }
 }
+.footer-line-2 { 
+  cursor: pointer; 
+  user-select: none; 
+  transition: transform 0.2s, color 0.2s; 
+  position: relative; 
+  z-index: 10; 
+}
+.footer-line-2:active { 
+  transform: scale(0.95); 
+}
+.footer-line-2:hover {
+  color: #fff;
+  text-shadow: 0 0 8px var(--celestial-gold);
+}

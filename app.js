@@ -207,8 +207,8 @@ function setMoonPhase() {
   
   moonEl.innerText = phases[phaseIndex];
   
-  const titleContainer = document.querySelector('.cosmic-brand');
-  if(titleContainer) titleContainer.addEventListener('dblclick', triggerConstellation);
+  const titleContainer = document.querySelector('.footer-line-2');
+  if(titleContainer) titleContainer.addEventListener('click', triggerConstellation);
 }
 
 resizeCanvas();
