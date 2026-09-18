@@ -181,34 +181,33 @@ function consultOracle() {
 
 // --- LIVE MATHEMATICAL MOON PHASE ---
 function setMoonPhase() {
-  const moonEl = document.getElementById('moon-info');
+  const moonEl = document.getElementById("moon-info");
   if (!moonEl) return;
-  
   const now = new Date();
   let year = now.getFullYear();
   let month = now.getMonth() + 1;
   let day = now.getDate();
-  
   if (month < 3) { year--; month += 12; }
   month++;
   const c = 365.25 * year;
   const e = 30.6 * month;
-  
   const totalDays = c + e + day - 694039.09;
   const cycle = totalDays / 29.5305882;
   const fractionalPhase = cycle - Math.floor(cycle);
   const phaseIndex = Math.round(fractionalPhase * 8) % 8;
-  
   const phases = [
-    '🌑 New Moon Tide', '🌒 Waxing Crescent Ocean', '🌓 First Quarter Tide',
-    '🌔 Waxing Gibbous Horizon', '🌕 Full Moon Radiance', '🌖 Waning Gibbous Sea',
-    '🌗 Last Quarter Tide', '🌘 Waning Crescent Ocean'
+    "🌑 New Moon Tide", "🌒 Waxing Crescent Ocean", "🌓 First Quarter Tide",
+    "🌔 Waxing Gibbous Horizon", "🌕 Full Moon Radiance", "🌖 Waning Gibbous Sea",
+    "🌗 Last Quarter Tide", "🌘 Waning Crescent Ocean"
   ];
-  
+  const links = [
+    "new-moon.html", "waxing-crescent.html", "first-quarter.html",
+    "waxing-gibbous.html", "full-moon.html", "waning-gibbous.html",
+    "last-quarter.html", "waning-crescent.html"
+  ];
   moonEl.innerText = phases[phaseIndex];
-  
-  const titleContainer = document.querySelector('.footer-line-2');
-  if(titleContainer) titleContainer.addEventListener('click', triggerConstellation);
+  const moonLink = document.querySelector(".lunar-phase");
+  if(moonLink) moonLink.href = links[phaseIndex];
 }
 
 resizeCanvas();
