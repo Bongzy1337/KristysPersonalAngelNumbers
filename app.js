@@ -144,7 +144,7 @@ function initLoveClock() {
   if (!clockEl) return;
   
   // DEFAULT START DATE (User can change this in app.js later)
-  const startDate = new Date('2022-01-01T00:00:00').getTime();
+  const startDate = new Date('2022-12-11T00:00:00').getTime();
 
   setInterval(() => {
     const now = new Date().getTime();
