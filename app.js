@@ -32,7 +32,7 @@ function initStars() {
   }
 }
 
-// --- ACTIVATE THE HEART EASTER EGG ---
+// --- ACTIVATE THE EASTER EGG ---
 function triggerConstellation() {
   if (constellationMode) return;
   constellationMode = true;
@@ -109,7 +109,7 @@ window.addEventListener('resize', resizeCanvas);
 window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
 window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-// --- INTERACTIVE HEARTS ON CLICK ---
+// --- INTERACTIVE WAVE & TEAL HEART SYMBOLS ON CLICK ---
 document.addEventListener('click', (e) => {
   const ripple = document.createElement('div');
   ripple.classList.add('ripple');
@@ -120,15 +120,20 @@ document.addEventListener('click', (e) => {
   ripple.style.top = `${e.pageY - size/2}px`;
   setTimeout(() => ripple.remove(), 750);
 
+  // Spawns 3 random waves and hearts with a teal glowing color
+  const clickSymbols = ['🌊', '♥'];
   for(let i=0; i<3; i++) {
     setTimeout(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('floating-heart');
-      heart.innerHTML = '✨💖';
-      heart.style.left = `${e.pageX - 15 + (Math.random() * 30 - 15)}px`;
-      heart.style.top = `${e.pageY - 15}px`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 2000);
+      const symbol = document.createElement('div');
+      symbol.classList.add('floating-heart'); // Keeps the float-up physics
+      symbol.innerHTML = clickSymbols[Math.floor(Math.random() * clickSymbols.length)];
+      symbol.style.color = '#8ae2d6'; // Oceanic Teal
+      symbol.style.textShadow = '0 0 8px #8ae2d6';
+      symbol.style.fontWeight = 'bold';
+      symbol.style.left = `${e.pageX - 15 + (Math.random() * 30 - 15)}px`;
+      symbol.style.top = `${e.pageY - 15}px`;
+      document.body.appendChild(symbol);
+      setTimeout(() => symbol.remove(), 2000);
     }, i * 150);
   }
 });
@@ -184,29 +189,20 @@ function setMoonPhase() {
   let month = now.getMonth() + 1;
   let day = now.getDate();
   
-  // Calculate Julian Date approximation for moon cycle
   if (month < 3) { year--; month += 12; }
   month++;
   const c = 365.25 * year;
   const e = 30.6 * month;
   
-  // Total days elapsed divided by the 29.53 day lunar cycle
   const totalDays = c + e + day - 694039.09;
   const cycle = totalDays / 29.5305882;
   const fractionalPhase = cycle - Math.floor(cycle);
-  
-  // Map the fraction into 8 distinct phases
   const phaseIndex = Math.round(fractionalPhase * 8) % 8;
   
   const phases = [
-    '🌑 New Moon Tide',
-    '🌒 Waxing Crescent Ocean',
-    '🌓 First Quarter Tide',
-    '🌔 Waxing Gibbous Horizon',
-    '🌕 Full Moon Radiance',
-    '🌖 Waning Gibbous Sea',
-    '🌗 Last Quarter Tide',
-    '🌘 Waning Crescent Ocean'
+    '🌑 New Moon Tide', '🌒 Waxing Crescent Ocean', '🌓 First Quarter Tide',
+    '🌔 Waxing Gibbous Horizon', '🌕 Full Moon Radiance', '🌖 Waning Gibbous Sea',
+    '🌗 Last Quarter Tide', '🌘 Waning Crescent Ocean'
   ];
   
   moonEl.innerText = phases[phaseIndex];
